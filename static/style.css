@@ -4,14 +4,14 @@ body {
 }
 
 #search {
-	float:center;
-	clear:both;
-	text-align:center;
-	align: center;
-	position: absolute;
-	width:30%;
-	top: 30%;
-	left: 35%
+	text-align: center;
+	width: 30%;
+	left: 35%;
+	margin: 71px 35% 0px 35%;
+}
+
+#content {
+	margin-top: 50px;
 }
 
 .issue {

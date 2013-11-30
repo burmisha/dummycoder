@@ -3,7 +3,6 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 import requests
 import json
 import re
-import sys
 from urllib import urlencode
 from collections import OrderedDict
 
@@ -41,7 +40,10 @@ def hello():
 			issue["title"] = item["title"]
 			issue["created_at"] = item["created_at"]
 			if i < 4:
-				repo = requests.get('https://api.github.com/repos/' + user + "/" + repo_url + '?access_token=' + token).json()
+				params = OrderedDict()
+				params["access_token"] = token
+				repo = requests.get('https://api.github.com/repos/' + user + "/" + repo_url, 
+									 params=urlencode(params)).json()
 				issue["description"] = sanitize(repo["description"])
 				issue["homepage"] = sanitize(repo["homepage"])
 			issues.append(issue)
@@ -55,10 +57,11 @@ def login():
 
 @app.route('/authorise')
 def authorise():
-	code = request.args.get('code', '')
-	r = requests.post("https://github.com/login/oauth/access_token", 
-		data={"client_id": "c0eade59a21038cda641", "client_secret": "ac9c1d3856d9cf53135af23245aaa86fb92ced79", "code": code}
-		)
+	params = OrderedDict()
+	params["client_id"] = "c0eade59a21038cda641"
+	params["client_secret"] = "ac9c1d3856d9cf53135af23245aaa86fb92ced79"
+	params["code"] = request.args.get('code', '')
+	r = requests.post("https://github.com/login/oauth/access_token", params=urlencode(params))
 	token = r.text.split("&", 1)[0].split("=")[1]
 	resp = make_response(redirect(url_for('hello')))
 	resp.set_cookie("access_token", token)
