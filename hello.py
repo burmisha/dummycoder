@@ -10,37 +10,42 @@ from collections import OrderedDict
 app = Flask(__name__)
 app.debug = True
 
+def sanitize(value):
+	if value:
+		return value
+	else:
+		return ""
+
 @app.route('/', methods=['GET', 'POST'])
 def hello():
 	# token = request.cookies.get("access_token")
 	token = "97ae087c18351e1b53a41a5f3779413bd020f32c"
-	q=""
+	q = ""
 	if request.method == 'GET':
 		return render_template('hello.html')
 	if request.method == 'POST':
-		p = OrderedDict()
-		p["q"] = request.form["query"]
-		p["language"] = request.form["language"]
-		p["access_token"] = token
-		r = requests.get('https://api.github.com/search/issues', params=urlencode(p))
-		j = r.json()
-		# q = j
+		params = OrderedDict()
+		params["q"] = request.form["query"]
+		params["language"] = request.form["language"]
+		params["access_token"] = token
+		j = requests.get('https://api.github.com/search/issues', params=urlencode(params)).json()
 		issues=[]
 		i = 1
 		for item in j["items"]:
 			i = i + 1;
+			cut_prefix = re.sub("^https://github.com/", "", item["html_url"])
+			[user, repo_url, _] = cut_prefix.split("/", 2)
+			issue = dict()
+			issue["html_url"] = item["html_url"]			
+			issue["body"] = item["body"]
+			issue["title"] = item["title"]
+			issue["created_at"] = item["created_at"]
 			if i < 4:
-				cut_prefix = re.sub("^https://github.com/", "", item["html_url"])
-				[user, repo_url, _] = cut_prefix.split("/", 2)
 				repo = requests.get('https://api.github.com/repos/' + user + "/" + repo_url + '?access_token=' + token).json()
-				issue = dict()
-				issue["description"] = repo["description"]
-				issue["html_url"] = item["html_url"]
-				issue["homepage"] = repo["homepage"]
-				issues.append(issue)
-			else: 
-				issues.append(dict({'description': "sample_desc", "html_url": item["html_url"]}))
-		return render_template('layout.html', items=issues, q=q)
+				issue["description"] = sanitize(repo["description"])
+				issue["homepage"] = sanitize(repo["homepage"])
+			issues.append(issue)
+		return render_template('layout.html', issues=issues, q=q)
 	return "Hello!"
 
 

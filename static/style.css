@@ -13,3 +13,22 @@ body {
 	top: 30%;
 	left: 35%
 }
+
+.issue {
+	float: left;
+	clear: both;
+	width: 80%;
+	margin: 0pt 10% 5pt 10%;
+}
+.issue_info {
+	float: left;
+	clear: left;
+	width: 50%;
+	margin-left: 10%;
+}
+.repo_info {
+	float: right;
+	clear:;
+	width: 30%;
+	/*margin-left: 10%;*/
+}
