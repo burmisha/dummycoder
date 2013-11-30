@@ -18,7 +18,7 @@ def sanitize(value):
 @app.route('/', methods=['GET', 'POST'])
 def hello():
 	# token = request.cookies.get("access_token")
-	token = "97ae087c18351e1b53a41a5f3779413bd020f32c"
+	token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
 	q = ""
 	logged_in = sanitize(request.cookies.get("logged_in"))
 	if request.method == 'GET':

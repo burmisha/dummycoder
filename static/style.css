@@ -1,6 +1,6 @@
 body {
 	font-family: sans-serif;
-	background: #eee; 
+	background: #ccc; 
 }
 
 #search {
@@ -18,13 +18,27 @@ body {
 	float: left;
 	clear: both;
 	width: 80%;
-	margin: 0pt 10% 5pt 10%;
+	margin: 5pt 10% 5pt 10%;
+	background: #eee;
+	border-radius: 5px;
+	padding: 0px 2% 0px 2%;
+}
+.info_type{
+	text-align: right;
+	color:  #333;
+	float: left;
+	width: 18%;
+	margin-right: 2%;
+	max-width: 120pt;
+}
+.info_value{
+	float: left;
+	width: 80%;
 }
 .issue_info {
 	float: left;
 	clear: left;
-	width: 50%;
-	margin-left: 10%;
+	width: 70%;
 }
 .repo_info {
 	float: right;
