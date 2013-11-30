@@ -17,7 +17,6 @@ def hello():
 		q = request.form['query']
 		r = requests.get('https://api.github.com/search/issues?access_token=' + token + '&q=' + q)
 		j = r.json()
-		# urls = [ a["url"] for a in j["items"] ]
 		items=[]
 		i = 1
 		for item in j["items"]:
@@ -26,7 +25,6 @@ def hello():
 				cut_prefix = re.sub("^https://github.com/", "", item["html_url"])
 				[user, repo_url, _] = cut_prefix.split("/", 2)
 				repo = requests.get('https://api.github.com/repos/' + user + "/" + repo_url + '?access_token=' + token).json()
-				# return 
 				items.append(dict({'description': repo["description"], "html_url": item["html_url"]}))
 			else: 
 				items.append(dict({'description': "sample_desc", "html_url": item["html_url"]}))
@@ -41,15 +39,10 @@ def login():
 @app.route('/authorise')
 def authorise():
 	code = request.args.get('code', '')
-	# headers = {'content-type': 'application/json'}
 	r = requests.post("https://github.com/login/oauth/access_token", 
 		data={"client_id": "c0eade59a21038cda641", "client_secret": "ac9c1d3856d9cf53135af23245aaa86fb92ced79", "code": code}
-		# , headers=headers
 		)
-	# token = "aa"
-	# token = request.args.get('access_token', r.json()["access_token"])
 	token = r.text.split("&", 1)[0].split("=")[1]
-	# sys.stderr.write(headers["content-type"])
 	resp = make_response(redirect(url_for('hello')))
 	resp.set_cookie("access_token", token)
 	return resp 
