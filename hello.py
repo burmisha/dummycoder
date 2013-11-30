@@ -20,8 +20,9 @@ def hello():
 	# token = request.cookies.get("access_token")
 	token = "97ae087c18351e1b53a41a5f3779413bd020f32c"
 	q = ""
+	logged_in = sanitize(request.cookies.get("logged_in"))
 	if request.method == 'GET':
-		return render_template('hello.html')
+		return render_template('hello.html', logged_in=logged_in)
 	if request.method == 'POST':
 		params = OrderedDict()
 		params["q"] = request.form["query"]
@@ -65,5 +66,22 @@ def authorise():
 	token = r.text.split("&", 1)[0].split("=")[1]
 	resp = make_response(redirect(url_for('hello')))
 	resp.set_cookie("access_token", token)
+	resp.set_cookie("logged_in", "yes")
 	return resp 
 
+@app.route('/logout')
+def logout():
+	# token = request.cookies.get("access_token")
+	# token = "97ae087c18351e1b53a41a5f3779413bd020f32c"
+	# params = OrderedDict()
+	# params["access_token"] = token
+
+	# r = requests.get("https://api.github.com/authorizations")
+	# j = r.json()
+	# return ', '.join([str(key) + ' ' + str(value) for key, value in j.items()])
+	# for i in j:
+	# 	requests.delete("https://api.github.com/authorizations/" + i["id"], urlencode(params))
+	resp = make_response(redirect(url_for('hello')))
+	resp.set_cookie("access_token", "")
+	resp.set_cookie("logged_in", "")
+	return resp 
