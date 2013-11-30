@@ -9,5 +9,15 @@
 	<h1>Dummy coder</h1>
 	<h2>Code. Learn. Contribute</h2>
 	<h3>and have fun!</h3>
+
+	<form action="{{ url_for('hello') }}" method=post>
+      <dl>
+        <dt>Query:
+        <dd><input type=text size=30 name=query>
+        <dt>Smth:
+        <dd><input type=text size=50 name=smth>
+        <dd><input type=submit value=ShareMe>
+      </dl>
+    </form>
 </body>
 </html>
