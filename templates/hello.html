@@ -3,6 +3,7 @@
 <head>
 	<title>Dummy coder | intro</title>
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
 	<script src="http://yandex.st/jquery/2.0.3/jquery.min.js"></script>
 </head>	
 <body>
@@ -10,14 +11,12 @@
 	<h2>Code. Learn. Contribute</h2>
 	<h3>and have fun!</h3>
 
+<div id="search">
 	<form action="{{ url_for('hello') }}" method=post>
-      <dl>
-        <dt>Query:
-        <dd><input type=text size=30 name=query>
-        <dt>Smth:
-        <dd><input type=text size=50 name=smth>
-        <dd><input type=submit value=ShareMe>
-      </dl>
-    </form>
+		<input type=text size=30 name=query class="form-control" placeholder="Query">
+		<input type=text size=50 name=smth class="form-control" placeholder="Smth">
+		<button type="submit" class="btn btn-lg btn-primary btn-block" value=ShareMe>Search</button>
+	</form>
+</div>
 </body>
 </html>
