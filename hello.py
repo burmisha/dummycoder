@@ -27,7 +27,8 @@ def hello():
 		params = OrderedDict()
 		params["q"] = request.form["query"]
 		params["language"] = request.form["language"]
-		params["access_token"] = token
+		if token: 
+			params["access_token"] = token
 		j = requests.get('https://api.github.com/search/issues', params=urlencode(params)).json()
 		issues=[]
 		i = 1
@@ -42,7 +43,8 @@ def hello():
 			issue["created_at"] = item["created_at"]
 			if i < 4:
 				params = OrderedDict()
-				params["access_token"] = token
+				if token:
+					params["access_token"] = token
 				repo = requests.get('https://api.github.com/repos/' + user + "/" + repo_url, 
 									 params=urlencode(params)).json()
 				issue["description"] = sanitize(repo["description"])
