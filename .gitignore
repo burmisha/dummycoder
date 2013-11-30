@@ -1,2 +1,3 @@
 venv
+static/load_issues.js
 *.pyc
