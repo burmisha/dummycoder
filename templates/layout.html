@@ -8,12 +8,21 @@
 	<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 </head>	
 <body>
-	<h1>Dummy coder</h1>
+	{% if q %}
 	My query was: {{ q }}
-
+	{% endif %}
 	{% for issue in issues %}
 	<div class="issue">
-		<h2><a href="{{issue.html_url}}">{{ issue.title }}</a></h2>
+		<div class="issue_info">
+			<div class="info_type"><span class="issue_name">&nbsp;</span>Issue:</div>
+			<div class="info_value"><span class="issue_name"><a href="{{issue.html_url}}">{{ issue.title }}</a></span></div>
+		</div>
+		<div class="repo_info">
+			<div class="info_value">
+				<a href="http://github.com/{{issue.repo_user}}/{{issue.repo_name}}">{{issue.repo_user}}/{{issue.repo_name}}</a><span class="issue_name">&nbsp;</span>
+			</div>	
+		</div>
+		<!-- <h3><a href="{{issue.html_url}}">{{ issue.title }}</a></h3> -->
 		<div class="issue_info">
 			<div class="info_type">Description:</div><div class="info_value">{{ issue.body }}</div>
 			<div class="info_type">Created at:</div><div class="info_value">{{ issue.created_at }}</div>

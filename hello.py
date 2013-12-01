@@ -6,6 +6,7 @@ import re
 from urllib import urlencode
 from collections import OrderedDict
 
+import time
 app = Flask(__name__)
 app.debug = True
 
@@ -17,8 +18,8 @@ def sanitize(value):
 
 @app.route('/', methods=['GET', 'POST'])
 def hello():
-	token = request.cookies.get("access_token")
-	# token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
+	# token = request.cookies.get("access_token")
+	token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
 	q = ""
 	logged_in = sanitize(request.cookies.get("logged_in"))
 	if request.method == 'GET':
@@ -35,17 +36,20 @@ def hello():
 		for item in j["items"]:
 			i = i + 1;
 			cut_prefix = re.sub("^https://github.com/", "", item["html_url"])
-			[user, repo_url, _] = cut_prefix.split("/", 2)
+			[repo_user, repo_name, _] = cut_prefix.split("/", 2)
 			issue = dict()
 			issue["html_url"] = item["html_url"]			
 			issue["body"] = item["body"]
 			issue["title"] = item["title"]
-			issue["created_at"] = item["created_at"]
+			created_at = time.strptime(item["created_at"], "%Y-%m-%dT%H:%M:%SZ")
+			issue["created_at"] = time.strftime("%B %d, %Y %H:%M", created_at)
+			issue["repo_name"] = repo_name
+			issue["repo_user"] = repo_user
 			if i < 4:
 				params = OrderedDict()
 				if token:
 					params["access_token"] = token
-				repo = requests.get('https://api.github.com/repos/' + user + "/" + repo_url, 
+				repo = requests.get('https://api.github.com/repos/' + repo_user + "/" + repo_name, 
 									 params=urlencode(params)).json()
 				issue["description"] = sanitize(repo["description"])
 				issue["homepage"] = sanitize(repo["homepage"])
