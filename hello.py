@@ -18,8 +18,8 @@ def sanitize(value):
 
 @app.route('/', methods=['GET', 'POST'])
 def hello():
-	# token = request.cookies.get("access_token")
-	token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
+	token = request.cookies.get("access_token")
+	# token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
 	q = ""
 	logged_in = sanitize(request.cookies.get("logged_in"))
 	user = sanitize(request.cookies.get("user"))
@@ -107,8 +107,8 @@ def about():
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
-	# token = request.cookies.get("access_token")
-	token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
+	token = request.cookies.get("access_token")
+	# token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
 	q = ""
 	params = OrderedDict()
 	if token: 
