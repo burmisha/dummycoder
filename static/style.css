@@ -37,6 +37,7 @@ body {
 	max-width: 120pt;
 }
 .info_value{
+	text-align: left;
 	float: left;
 	clear: right;
 	width: 80%;
@@ -47,6 +48,7 @@ body {
 	clear: left;
 	width: 70%;
 }
+
 .repo_info {
 	float: right;
 	clear: right;
@@ -59,4 +61,9 @@ body {
     margin-bottom: 10px;
     /*	margin: 0pt;
 	padding: 0pt;*/
+}
+
+.avatar {
+	max-width: 80pt;
+	max-width: 120pt;
 }

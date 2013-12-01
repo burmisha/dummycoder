@@ -22,6 +22,7 @@ def hello():
 	token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
 	q = ""
 	logged_in = sanitize(request.cookies.get("logged_in"))
+	user = sanitize(request.cookies.get("user"))
 	if request.method == 'GET':
 		return render_template('hello.html', logged_in=logged_in)
 	if request.method == 'POST':
@@ -54,7 +55,7 @@ def hello():
 				issue["description"] = sanitize(repo["description"])
 				issue["homepage"] = sanitize(repo["homepage"])
 			issues.append(issue)
-		return render_template('layout.html', issues=issues, q=q)
+		return render_template('layout.html', issues=issues, q=q, user=user)
 	return "Hello!"
 
 
@@ -73,6 +74,12 @@ def authorise():
 	resp = make_response(redirect(url_for('hello')))
 	resp.set_cookie("access_token", token)
 	resp.set_cookie("logged_in", "yes")
+
+	params = OrderedDict()
+	if token: 
+		params["access_token"] = token
+	user = requests.get('https://api.github.com/user', params=urlencode(params)).json()
+	resp.set_cookie("user", user["login"])
 	return resp 
 
 @app.route('/logout')
@@ -90,9 +97,21 @@ def logout():
 	resp = make_response(redirect(url_for('hello')))
 	resp.set_cookie("access_token", "")
 	resp.set_cookie("logged_in", "")
+	resp.set_cookie("user", "")
 	return resp 
 
 @app.route('/about')
 def about():
 	logged_in = sanitize(request.cookies.get("logged_in"))
 	return render_template('about.html', logged_in=logged_in)
+
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+	# token = request.cookies.get("access_token")
+	token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
+	q = ""
+	params = OrderedDict()
+	if token: 
+		params["access_token"] = token
+	user = requests.get('https://api.github.com/user', params=urlencode(params)).json()
+	return render_template('user.html', user=user)
