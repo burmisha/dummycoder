@@ -35,13 +35,25 @@
 	</nav>
 <div id="content">
 <div id="search">
-{% if user.login %}
+{% if User.login %}
 <div class="info_type">&nbsp;</div>
-<div class="info_value"><img class="avatar" src="{{ user.avatar_url }}"/></div>
+<div class="info_value"><img class="avatar" src="{{ User.avatar_url }}"/></div>
 {% endif %}
-{% if user.login %}
+{% if User.login %}
 <div class="info_type">Username:</div>
-<div class="info_value">{{user.login}}</div>
+<div class="info_value">{{User.login}}</div>
+{% endif %}
+{% if User.name %}
+<div class="info_type">Name:</div>
+<div class="info_value">{{User.name}}</div>
+{% endif %}
+{% if User.followers %}
+<div class="info_type">Company:</div>
+<div class="info_value">{{User.company}}</div>
+{% endif %}
+{% if User.followers %}
+<div class="info_type">Followers:</div>
+<div class="info_value">{{User.followers}}</div>
 {% endif %}
 </div>
 </div>

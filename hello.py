@@ -103,15 +103,17 @@ def logout():
 @app.route('/about')
 def about():
 	logged_in = sanitize(request.cookies.get("logged_in"))
-	return render_template('about.html', logged_in=logged_in)
+	user = sanitize(request.cookies.get("user"))
+	return render_template('about.html', logged_in=logged_in, user=user)
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
 	token = request.cookies.get("access_token")
+	logged_in = sanitize(request.cookies.get("logged_in"))
+	user = sanitize(request.cookies.get("user"))
 	# token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
 	params = OrderedDict()
 	if token: 
 		params["access_token"] = token
-	user = requests.get('https://api.github.com/user', params=urlencode(params)).json()
-	logged_in = sanitize(request.cookies.get("logged_in"))
-	return render_template('user.html', user=user, logged_in=logged_in)
+	User = requests.get('https://api.github.com/user', params=urlencode(params)).json()
+	return render_template('user.html', User=User, logged_in=logged_in, user=user)
