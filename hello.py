@@ -24,7 +24,7 @@ def hello():
 	logged_in = sanitize(request.cookies.get("logged_in"))
 	user = sanitize(request.cookies.get("user"))
 	if request.method == 'GET':
-		return render_template('hello.html', logged_in=logged_in)
+		return render_template('hello.html', logged_in=logged_in, user=user)
 	if request.method == 'POST':
 		params = OrderedDict()
 		params["q"] = request.form["query"]
@@ -55,7 +55,7 @@ def hello():
 				issue["description"] = sanitize(repo["description"])
 				issue["homepage"] = sanitize(repo["homepage"])
 			issues.append(issue)
-		return render_template('layout.html', issues=issues, q=q, user=user)
+		return render_template('layout.html', issues=issues, q=q, user=user, logged_in=logged_in)
 	return "Hello!"
 
 
@@ -114,4 +114,4 @@ def user():
 	if token: 
 		params["access_token"] = token
 	user = requests.get('https://api.github.com/user', params=urlencode(params)).json()
-	return render_template('user.html', user=user)
+	return render_template('user.html', user=user, logged_in=logged_in)
