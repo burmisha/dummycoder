@@ -91,3 +91,8 @@ def logout():
 	resp.set_cookie("access_token", "")
 	resp.set_cookie("logged_in", "")
 	return resp 
+
+@app.route('/about')
+def about():
+	logged_in = sanitize(request.cookies.get("logged_in"))
+	return render_template('about.html', logged_in=logged_in)

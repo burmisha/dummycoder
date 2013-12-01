@@ -1,14 +1,16 @@
 body {
-	font-family: Roboto, Marmelad, arial;
+	font-family: Roboto, arial;
+	font-size: 13pt;
 	color: #000;
 	background: #ddd; 
 }
 
 #search {
+	float: left;
+	clear: both;
 	text-align: center;
-	width: 30%;
-	left: 35%;
-	margin: 71px 35% 0px 35%;
+	width: 40%;
+	margin: 100px 30% 0px 30%;
 }
 
 #content {
@@ -23,6 +25,7 @@ body {
 	background: #f5f5f5;
 	border-radius: 5px;
 	padding: 0px 2% 5pt 2%;
+	font-size: 11pt;
 }
 .info_type{
 	text-align: right;
