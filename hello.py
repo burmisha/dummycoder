@@ -109,9 +109,9 @@ def about():
 def user():
 	token = request.cookies.get("access_token")
 	# token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
-	q = ""
 	params = OrderedDict()
 	if token: 
 		params["access_token"] = token
 	user = requests.get('https://api.github.com/user', params=urlencode(params)).json()
+	logged_in = sanitize(request.cookies.get("logged_in"))
 	return render_template('user.html', user=user, logged_in=logged_in)
