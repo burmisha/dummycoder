@@ -46,7 +46,8 @@ body {
 .issue_info {
 	float: left;
 	clear: left;
-	width: 70%;
+	width: 68%;
+	margin-right: 2%;
 }
 
 .repo_info {

@@ -46,7 +46,7 @@ def hello():
 			issue["created_at"] = time.strftime("%B %d, %Y %H:%M", created_at)
 			issue["repo_name"] = repo_name
 			issue["repo_user"] = repo_user
-			if i < 4:
+			if i < 10:
 				params = OrderedDict()
 				if token:
 					params["access_token"] = token
