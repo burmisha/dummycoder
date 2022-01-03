@@ -10,16 +10,18 @@ import time
 app = Flask(__name__)
 app.debug = True
 
+
 def sanitize(value):
 	if value:
 		return value
 	else:
 		return ""
 
+
 @app.route('/', methods=['GET', 'POST'])
 def hello():
 	token = request.cookies.get("access_token")
-	# token = "978ca3a1c15d3ca0dc6789f30bc5bf2b45f3ffee"
+	# token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 	q = ""
 	logged_in = sanitize(request.cookies.get("logged_in"))
 	user = sanitize(request.cookies.get("user"))
@@ -66,8 +68,8 @@ def login():
 @app.route('/authorise')
 def authorise():
 	params = OrderedDict()
-	params["client_id"] = "c0eade59a21038cda641"
-	params["client_secret"] = "ac9c1d3856d9cf53135af23245aaa86fb92ced79"
+	params["client_id"] = "xxxxxxxxxxxxxxxxxxxx"
+	params["client_secret"] = "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
 	params["code"] = request.args.get('code', '')
 	r = requests.post("https://github.com/login/oauth/access_token", params=urlencode(params))
 	token = r.text.split("&", 1)[0].split("=")[1]
@@ -85,7 +87,7 @@ def authorise():
 @app.route('/logout')
 def logout():
 	# token = request.cookies.get("access_token")
-	# token = "97ae087c18351e1b53a41a5f3779413bd020f32c"
+	# token = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 	# params = OrderedDict()
 	# params["access_token"] = token
 
